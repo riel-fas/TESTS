@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <limits.h>
+#include "ft_printf.h"
+
+int main(void)
+{
+    int ret_ft; 
+	int ret_sys;
+
+    ret_ft = ft_printf("ft_printf: %d\n", 42);
+    ret_sys = printf("printf   : %d\n", 42);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    ret_ft = ft_printf("ft_printf: %d\n", -42);
+    ret_sys = printf("printf   : %d\n", -42);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    // Test cases for %s (strings)
+    ret_ft = ft_printf("ft_printf: %s\n", "Hello, 42!");
+    ret_sys = printf("printf   : %s\n", "Hello, 42!");
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    ret_ft = ft_printf("ft_printf: %s\n", NULL);
+    ret_sys = printf("printf   : %s\n", NULL);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    //%c
+    ret_ft = ft_printf("ft_printf: %c\n", 'A');
+    ret_sys = printf("printf   : %c\n", 'A');
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    //%x
+    ret_ft = ft_printf("ft_printf: %x\n", 255);
+    ret_sys = printf("printf   : %x\n", 255);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    //%u
+    ret_ft = ft_printf("ft_printf: %u\n", 3000000000U);
+    ret_sys = printf("printf   : %u\n", 3000000000U);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    //%%
+    ret_ft = ft_printf("ft_printf: %%\n");
+    ret_sys = printf("printf   : %%\n");
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    // Edge cases: very large and very small integers
+    ret_ft = ft_printf("ft_printf: %d\n", INT_MAX);
+    ret_sys = printf("printf   : %d\n", INT_MAX);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    ret_ft = ft_printf("ft_printf: %d\n", INT_MIN);
+    ret_sys = printf("printf   : %d\n", INT_MIN);
+    printf("Return values: ft_printf = %d, printf = %d\n\n", ret_ft, ret_sys);
+
+    return 0;
+}
+
