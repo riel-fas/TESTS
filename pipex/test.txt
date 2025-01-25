@@ -1,0 +1,60 @@
+1. Possible Tests for Pipex
+Basic Valid Tests
+Simple command execution:
+
+./pipex infile "cat" "wc -l" outfile
+Input file infile is piped through cat and wc -l, and the result is written to outfile.
+
+
+./pipex infile "grep hello" "sort" outfile
+Input file is filtered using grep and then sorted.
+
+
+./pipex infile "/bin/cat" "/usr/bin/wc -l" outfile
+Tests commands with absolute paths.
+
+
+./pipex infile "echo 'hello world'" "tr ' ' '_'" outfile
+Ensure that quotes in commands are handled correctly.
+
+#########################################################################
+
+./pipex nonexistent "cat" "wc -l" outfile
+Expect: "No such file or directory" error.
+
+
+./pipex infile "invalidcommand" "wc -l" outfile
+Expect: "pipex: command not found".
+
+
+touch outfile
+chmod 000 outfile
+./pipex infile "cat" "wc -l" outfile
+Expect: "Error opening outfile".
+
+
+
+./pipex infile "" "" outfile
+Expect: "ERROR: Invalid command".
+
+
+./pipex infile "ls    -l" "wc    -l" outfile
+Ensure multiple spaces don't break the parsing logic.
+
+############################################################################
+
+./pipex largefile "cat" "wc -l" outfile
+Test with a file containing millions of lines.
+
+
+./pipex infile "cat" "yes" outfile
+Ensure proper handling of infinite outputs (yes generates an infinite stream).
+
+
+./pipex infile "invalidcommand" "anotherinvalid" outfile
+Ensure that errors propagate correctly.
+
+
+Concurrent execution: Run multiple instances of your program simultaneously to check for race conditions:
+./pipex file1 "cat" "grep a" file2 &
+./pipex file3 "cat" "grep b" file4 &
