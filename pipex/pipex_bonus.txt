@@ -1,0 +1,79 @@
+1. Basic Test with Two Commands:
+Command: ./pipex infile "ls -l" "cat" outfile
+Description: Basic two-command pipeline, where ls -l lists files and cat prints the output.
+
+2. Multiple Commands (Chain of Pipes):
+Command: ./pipex infile "ls -l" "grep pipex" "wc -l" outfile
+Description: Multiple commands chained together, with ls -l listing files, grep pipex filtering the results, and wc -l counting the number of matching files.
+
+3. Using Pipes with Commands that Require Input:
+Command: ./pipex infile "cat" "grep hello" outfile
+Description: Pipe the contents of infile through cat, then filter the result using grep hello, and save the output to outfile.
+
+4. One Command and Output to File:
+Command: ./pipex infile "cat" outfile
+Description: Simple case where cat is used to print the contents of infile to outfile.
+
+5. Command that Doesn't Exist (Error Handling):
+Command: ./pipex infile "ls -l" "nonexistent_command" outfile
+Description: Testing error handling when a command doesn't exist (e.g., nonexistent_command).
+
+6. Input and Output File with Multiple Commands:
+Command: ./pipex infile "cat" "grep foo" "awk '{print $2}'" outfile
+Description: Chain of multiple commands with both input (infile) and output (outfile), including text filtering with grep and processing with awk.
+
+7. Using a Valid Command with Special Characters:
+Command: ./pipex infile "echo \"Hello World!\"" "awk '{print $2}'" outfile
+Description: Using a command (echo) that requires special characters (like quotes) as part of its input.
+
+8. Input File Not Found (Error Handling):
+Command: ./pipex nonexistent_infile "cat" "grep hello" outfile
+Description: Testing when the input file does not exist, which should trigger an error message.
+
+9. Output File Not Writable (Error Handling):
+Command: ./pipex infile "ls" "cat" "/nonexistent/directory/output" outfile
+Description: Testing when the output file cannot be written (e.g., the directory does not exist).
+
+10. Using Commands with Arguments:
+Command: ./pipex infile "grep pipex" "awk '{print $2}'" outfile
+Description: Passing arguments to the commands, where grep pipex filters the input and awk prints the second field.
+
+11. Single Command Without Pipes (No Pipe Case):
+Command: ./pipex infile "cat" outfile
+Description: No pipes, just a simple command that reads the input file and outputs to the output file.
+
+12. Test with More Than Two Commands:
+Command: ./pipex infile "echo 'first'" "grep 'first'" "awk '{print $1}'" outfile
+Description: Three commands chained together, with input file processing through multiple steps and writing to an output file.
+
+13. Empty Command:
+Command: ./pipex infile "" "cat" outfile
+Description: Test for an empty command, which should ideally handle the case and show an appropriate error message.
+
+14. Using Complex Commands:
+Command: ./pipex infile "echo $(ls)" "grep pipex" outfile
+Description: Use complex shell features (e.g., command substitution) inside one of the commands.
+
+15. Nonexistent Command in the Middle of the Pipeline:
+Command: ./pipex infile "cat" "nonexistent" "grep hello" outfile
+Description: Test where a middle command does not exist, which should result in an error.
+
+16. Mixing Built-In and External Commands:
+Command: ./pipex infile "echo Hello" "grep Hello" "awk '{print $1}'" outfile
+Description: Mixing built-in commands (echo) with external ones (grep and awk).
+
+17. Running Commands That Generate Output and Use It in Following Commands:
+Command: ./pipex infile "echo pipex" "grep pipex" "awk '{print $1}'" outfile
+Description: Command generates output from echo, pipes it through grep to filter the output, and awk to manipulate the data.
+
+18. Multiple Pipes but Output to Standard Output (stdout):
+Command: ./pipex infile "cat" "grep 'hello'" "awk '{print $2}'"
+Description: Run multiple commands through pipes and output the final result directly to stdout instead of a file.
+
+19. Chained Commands with a Long Pipeline:
+Command: ./pipex infile "cat" "grep pipex" "awk '{print $2}'" "sort" "uniq" outfile
+Description: Test with a long chain of commands to ensure the program can handle multiple pipes properly.
+
+20. Handling Commands with Piped Input/Output and Special Characters:
+Command: ./pipex infile "echo 'Hello World'" "awk '{print $1}'" "grep 'Hello'" outfile
+Description: Testing piped commands when the input or output involves special characters or spaces.
